@@ -6,7 +6,7 @@ services:
     ports:
       - 5000:5000
     networks:
-      - network
+      - elastic_network
     environment:
       - ES_HOST=elasticsearch
       - ELASTIC_PASSWORD=test123
@@ -27,7 +27,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
     restart: always
     networks:
-      - network
+      - elastic_network
     environment:
       - ELASTIC_PASSWORD=test123
       - xpack.security.enabled=false
@@ -38,7 +38,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4gb
+          memory: 6gb
 
   ollama:
     volumes:
@@ -53,7 +53,7 @@ services:
     environment:
       - gpus=all
     networks:
-      - network
+      - elastic_network
     deploy:
       resources:
         reservations:
@@ -63,7 +63,8 @@ services:
               capabilities: [gpu]
 
 networks:
-  network:
+  elastic_network:
+    driver: bridge
 
 volumes:
   ollama_data:
