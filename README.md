@@ -13,3 +13,7 @@ Version 0.1.1:
 - [ ] serve basic metadata for search results
 - [ ] api documentation and versioning
 - [ ] basic documentation for python flask server
+
+
+Version 1.0.0:
+- [ ] finished frontend implementation
