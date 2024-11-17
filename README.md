@@ -9,9 +9,9 @@
 ## Roadmap:
 
 Version 0.1.1:
-- [ ] basic web server to serve search results implemented
-- [ ] serve basic metadata for search results
-- [ ] api documentation and versioning
+- [X] basic web server to serve search results implemented
+- [X] serve basic metadata for search results
+- [X] api documentation and versioning
 - [ ] basic documentation for python flask server
 
 
