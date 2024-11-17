@@ -1,0 +1,26 @@
+Endpoint URL
+POST /v1/search
+
+Description
+This endpoint performs a search operation based on the query string provided in the request body. 
+The response includes a list of documents containing their content and metadata.
+
+Example Request:
+{
+    "query": "large language models",
+}
+
+Example Response:
+
+[
+    {
+
+    'metadata':
+        {'source': './test_documents/2411.04996v1.pdf Page: 3'},
+
+    'page_content': 
+        '1 Introduction\nThe development of foundation models has expanded to multi-modal large language models (LLMs)'
+
+    }
+        
+]
