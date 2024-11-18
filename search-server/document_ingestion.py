@@ -27,13 +27,11 @@ def get_pdf_documents(pdf_docs):
 def load_pdf_documents(elasticsearch_client)-> list[str]:
 
     if check_elasticsearch_state() == False:
-        # Replace this with the actual directory path containing your PDFs
         pdf_directory = "./test_documents"
 
-        # Get a list of all PDF files in the directory
         pdf_files = [os.path.join(pdf_directory, f) for f in os.listdir(pdf_directory) if f.endswith('.pdf')]
 
-        # Pass the list of PDF file paths to the function
+        # Pass the list of PDF file paths to the get_pdf_documents function
         documents = get_pdf_documents(pdf_files)
         document_length = 0
         for doc in documents:
@@ -54,7 +52,7 @@ def load_pdf_documents(elasticsearch_client)-> list[str]:
 #TODO: This function sucks, remove as soon as possible
 def check_elasticsearch_state():
     if not os.path.exists("./state.txt"):
-        # File does not exist, create it with 'false'
+        # File does not exist, create it with 'true'
         with open("./state.txt", 'w') as file:
             file.write('true')
         return False    
