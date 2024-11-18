@@ -12,8 +12,10 @@ Version 0.1.1:
 - [X] basic web server to serve search results implemented
 - [X] serve basic metadata for search results
 - [X] api documentation and versioning
-- [ ] basic documentation for python flask server
+- [X] basic documentation for python flask server
 
 
 Version 1.0.0:
 - [ ] finished frontend implementation
+- [ ] management for documents/knowledge base to be searched (as separate service or inside of flask app)
+
