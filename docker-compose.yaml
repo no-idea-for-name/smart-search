@@ -1,7 +1,7 @@
 name: smart-search
 services:
   search-server:
-    image: search-server
+    image: search-server:0.1.1
     restart: unless-stopped
     ports:
       - 5000:5000
@@ -28,6 +28,8 @@ services:
     restart: always
     networks:
       - elastic_network
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
     environment:
       - ELASTIC_PASSWORD=test123
       - xpack.security.enabled=false
@@ -68,3 +70,4 @@ networks:
 
 volumes:
   ollama_data:
+  elasticsearch_data:
