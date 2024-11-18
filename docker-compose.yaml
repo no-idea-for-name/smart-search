@@ -14,7 +14,7 @@ services:
       - OLLAMA_HOST=ollama
       - LANGCHAIN_API_KEY=
       - LANGCHAIN_TRACING_V2=false
-      - LANGCHAIN_PROJECT=found-chapter
+      - LANGCHAIN_PROJECT=smart-search
     deploy:
       resources:
         limits:
