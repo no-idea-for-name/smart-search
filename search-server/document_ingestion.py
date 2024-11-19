@@ -2,15 +2,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from PyPDF2 import PdfReader
 from langchain_core.documents import Document
 import os
-from langchain_elasticsearch import ElasticsearchStore
-from langchain_ollama import OllamaEmbeddings
-
-
-
-es_host = os.environ["ES_HOST"]
-es_password = os.environ["ELASTIC_PASSWORD"]
-ollama_host = os.environ["OLLAMA_HOST"]
-embedding_model = os.environ["EMBEDDING_MODEL"]
 
 
 def get_pdf_documents(pdf_docs):
@@ -33,16 +24,14 @@ def get_pdf_documents(pdf_docs):
 
     return documents
 
-def load_pdf_documents(elasticsearch_client):
+def load_pdf_documents(elasticsearch_client)-> list[str]:
 
     if check_elasticsearch_state() == False:
-        # Replace this with the actual directory path containing your PDFs
         pdf_directory = "./test_documents"
 
-        # Get a list of all PDF files in the directory
         pdf_files = [os.path.join(pdf_directory, f) for f in os.listdir(pdf_directory) if f.endswith('.pdf')]
 
-        # Pass the list of PDF file paths to the function
+        # Pass the list of PDF file paths to the get_pdf_documents function
         documents = get_pdf_documents(pdf_files)
         document_length = 0
         for doc in documents:
@@ -63,7 +52,7 @@ def load_pdf_documents(elasticsearch_client):
 #TODO: This function sucks, remove as soon as possible
 def check_elasticsearch_state():
     if not os.path.exists("./state.txt"):
-        # File does not exist, create it with 'false'
+        # File does not exist, create it with 'true'
         with open("./state.txt", 'w') as file:
             file.write('true')
         return False    
@@ -74,16 +63,3 @@ def check_elasticsearch_state():
     
     # Check if the content is 'true'
     return content == 'true'
-
-
-
-# Initialize the Elasticsearch vector store for embedding and retrieval
-elasticsearch_client = ElasticsearchStore(
-    es_url="http://" + es_host + ":9200",
-    index_name="smart-search",
-    embedding=OllamaEmbeddings(model=embedding_model, base_url="http://" + ollama_host + ":11434"),
-    es_user="elastic",
-    es_password=es_password
-    )
-
-
