@@ -1,7 +1,7 @@
 name: smart-search
 services:
   search-server:
-    image: search-server:0.1.2
+    image: search-server:0.2.0
     restart: unless-stopped
     ports:
       - 5000:5000
@@ -24,7 +24,7 @@ services:
       - ollama
 
   knowledge-manager:
-    image: knowledge-manager:0.1.2
+    image: knowledge-manager:0.2.0
     restart: unless-stopped
     ports:
       - 6000:5000

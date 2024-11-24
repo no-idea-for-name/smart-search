@@ -3,7 +3,7 @@ import time
 from langchain_elasticsearch import ElasticsearchStore
 from langchain_ollama import OllamaEmbeddings
 import os
-from document_ingestion import  load_pdf_documents
+from document_ingestion import  load_initial_documents
 
 es_host = os.environ["ES_HOST"]
 es_password = os.environ["ELASTIC_PASSWORD"]
@@ -27,8 +27,8 @@ elasticsearch_client = ElasticsearchStore(
 retriever = elasticsearch_client.as_retriever(search_kwargs={"score_threshold": 0.7})
 
 # Load PDF documents into Elasticsearch
-uuids = load_pdf_documents(elasticsearch_client)
-print(uuids)
+load_initial_documents()
+
 
 
 

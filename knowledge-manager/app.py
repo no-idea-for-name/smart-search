@@ -7,6 +7,7 @@ from langchain_core.documents import Document
 from langchain_elasticsearch import ElasticsearchStore
 from langchain_ollama import OllamaEmbeddings
 import json
+import requests
 
 es_host = os.environ["ES_HOST"]
 es_password = os.environ["ELASTIC_PASSWORD"]
@@ -16,7 +17,6 @@ embedding_model = os.environ["EMBEDDING_MODEL"]
 app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = {'pdf'}
-
 
 def allowed_file(filename):
     """Check if the file extension is allowed."""
@@ -50,7 +50,33 @@ def get_pdf_documents(pdf_docs):
 
     return documents
 
+@app.route('/v1/init', methods=['GET'])
+def load_initial_pdf_documents():
+    # Directory containing test PDF documents
+    pdf_directory = "./test_documents"
 
+    # Get a list of PDF files in the directory
+    pdf_files = [os.path.join(pdf_directory, f) for f in os.listdir(pdf_directory) if f.endswith('.pdf')]
+
+    uuids = []
+
+    # Iterate over the PDF files and send each one to the /v1/add endpoint
+    for pdf_file in pdf_files:
+        with open(pdf_file, 'rb') as file:
+            # Make a POST request to the /v1/add endpoint
+            response = requests.post(
+                url="http://localhost:5000/v1/add",
+                files={'file': file}
+            )
+        
+        # Check if the request was successful
+        if response.status_code == 200:
+            response_data = response.json()
+            if "uuids" in response_data:
+                uuids.extend(response_data["uuids"])
+        else:
+            print(f"Failed to upload {pdf_file}: {response.text}")
+    return jsonify({"message": "Knowledge store initialized."}), 200
 
 
 def add_pdf_documents(documents)-> list[str]:
@@ -64,7 +90,6 @@ def add_pdf_documents(documents)-> list[str]:
 
     uuids = elasticsearch_client.add_documents(documents)
     return uuids
-
 
 
 @app.route('/v1/add', methods=['POST'])
