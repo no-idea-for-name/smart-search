@@ -19,7 +19,7 @@ def get_pdf_documents(pdf_docs):
             text += page.extract_text()
             chunks = text_splitter.split_text(text)
             for chunk in chunks:
-                documents.append(Document(page_content=chunk,metadata={"source": f"{pdf}"+f" Page: {page_number}"}))
+                documents.append(Document(page_content=chunk,metadata={"source_document": f"{os.path.basename(pdf)}","page_number": page_number}))
             page_number += 1
 
     return documents

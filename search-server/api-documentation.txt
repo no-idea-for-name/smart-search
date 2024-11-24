@@ -16,7 +16,7 @@ Example Response:
     {
 
     'metadata':
-        {'source': './test_documents/2411.04996v1.pdf Page: 3'},
+        {'source': './test_documents/2411.04996v1.pdf', 'page_number': 1},
 
     'page_content': 
         '1 Introduction\nThe development of foundation models has expanded to multi-modal large language models (LLMs)'
