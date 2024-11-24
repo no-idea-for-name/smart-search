@@ -27,7 +27,7 @@ services:
     image: knowledge-manager:0.2.0
     restart: unless-stopped
     ports:
-      - 6000:5000
+      - 6000:6000
     networks:
       - elastic_network
     environment:

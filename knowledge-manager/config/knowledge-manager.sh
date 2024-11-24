@@ -2,4 +2,4 @@
 
 
 # Run Streamlit
-flask run
+flask run -p 6000

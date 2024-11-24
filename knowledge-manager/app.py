@@ -65,7 +65,7 @@ def load_initial_pdf_documents():
         with open(pdf_file, 'rb') as file:
             # Make a POST request to the /v1/add endpoint
             response = requests.post(
-                url="http://localhost:5000/v1/add",
+                url="http://localhost:6000/v1/add",
                 files={'file': file}
             )
         
@@ -199,4 +199,4 @@ def delete_file():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=6000)
