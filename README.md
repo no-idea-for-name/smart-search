@@ -1,7 +1,8 @@
 # smart-search
 
 ## Setup:
-- go into search-server and run ```docker build -t search-server:0.1.2 .```
+- go into search-server and run ```docker build -t search-server:0.2.0 .```
+- go into knowledge-manager and run ```docker build -t knowledge-manager:0.2.0 .```
 - run ```docker-compose up```
 
 ## Customization:
