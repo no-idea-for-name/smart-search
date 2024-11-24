@@ -67,8 +67,6 @@ def add_pdf_documents(documents)-> list[str]:
 
 
 
-
-
 @app.route('/v1/add', methods=['POST'])
 def upload_file():
     # Check if the request has a file
@@ -76,25 +74,14 @@ def upload_file():
         return jsonify({"error": "No file part"}), 400
 
     file = request.files['file']
-    
+
     # If no file is selected
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
 
     # Check if the file is a PDF
     if file and allowed_file(file.filename):
-        # Secure the file name and save it
         filename = file.filename
-        documents = get_pdf_documents([file])
-        uuids = add_pdf_documents(documents)
-        
-        # Construct the current entry
-        current_entry = {
-            "file": filename,
-            "uuids": uuids
-        }
-
-        # Specify the output file path
         output_file_path = "data/data.json"
 
         # Ensure the data directory exists
@@ -109,6 +96,20 @@ def upload_file():
                     data = []  # If the file is empty or invalid
         else:
             data = []
+
+        # Check if the file already exists in the JSON
+        if any(entry["file"] == filename for entry in data):
+            return jsonify({"message": f"File {filename} already exists."}), 200
+
+        # Process and embed the new file
+        documents = get_pdf_documents([file])
+        uuids = add_pdf_documents(documents)
+
+        # Construct the current entry
+        current_entry = {
+            "file": filename,
+            "uuids": uuids
+        }
 
         # Append the new entry
         data.append(current_entry)
