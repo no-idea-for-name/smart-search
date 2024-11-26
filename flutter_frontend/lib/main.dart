@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_frontend/constants.dart';
+import 'package:flutter_frontend/web/knowledge_manager_page.dart';
 import 'package:flutter_frontend/web/web_home_page.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -25,6 +26,7 @@ class MainApp extends StatelessWidget {
       title: 'Smart Search',
       getPages: [
         GetPage(name: WebHomePage.WEB_HOME_PAGE_ROUTE, page: () => WebHomePage()),
+        GetPage(name: KnowledgeManager.WEB_KOWLEDGE_MANAGER_ROUTE, page: () => KnowledgeManager())
       ],
     );
   }
