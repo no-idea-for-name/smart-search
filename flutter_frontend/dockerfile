@@ -1,26 +1,11 @@
-# Step 1: Build the Flutter web app
-FROM cirrusci/flutter:stable AS builder
-
-# Set the working directory
-WORKDIR /app
-
-# Copy the Flutter project files into the container
-COPY . .
-
-# Get Flutter dependencies
-RUN flutter pub get
-
-# Build the Flutter app for the web
-RUN flutter build web
-
-# Step 2: Set up Nginx to serve the app
+# Step 1: Use a base image with Nginx installed
 FROM nginx:alpine
 
-# Copy the Flutter web build files into Nginx's HTML directory
-COPY --from=builder /app/build/web /usr/share/nginx/html
+# Step 2: Copy the Flutter build output into the Nginx container
+#COPY build/web /usr/share/nginx/html
 
-# Expose port 80 to access the app through Nginx
-EXPOSE 80
+# Step 3: Expose the default HTTP port
+EXPOSE 4000
 
-# Start Nginx when the container runs
+# Step 4: Start Nginx in the foreground (default entrypoint is fine)
 CMD ["nginx", "-g", "daemon off;"]

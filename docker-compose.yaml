@@ -64,6 +64,16 @@ services:
               count: 1
               capabilities: [gpu]
 
+  flutter-frontend:
+    build: ./flutter_frontend
+    ports:
+      - 4000:4000
+    container_name: flutter-frontend
+    volumes:
+      - ./flutter_frontend/build/web:/usr/share/nginx/html
+      - ./flutter_frontend/nginx.conf:/etc/nginx/nginx.conf
+    restart: always
+
 networks:
   elastic_network:
     driver: bridge
