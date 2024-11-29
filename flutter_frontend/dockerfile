@@ -1,11 +1,39 @@
-# Step 1: Use a base image with Nginx installed
+# Stage 1: Build the Flutter application
+FROM dart:stable AS build
+
+# Install Flutter SDK
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    unzip \
+    xz-utils \
+    zip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Flutter
+RUN git clone https://github.com/flutter/flutter.git /opt/flutter
+ENV PATH="/opt/flutter/bin:${PATH}"
+
+# Pre-cache Flutter dependencies
+WORKDIR /app
+COPY pubspec.yaml .
+RUN flutter pub get
+
+# Copy the rest of your Flutter app code into the container
+COPY . .
+
+# Build the Flutter web app
+RUN flutter build web --release
+
+# Stage 2: Set up Nginx to serve the built Flutter app
 FROM nginx:alpine
 
-# Step 2: Copy the Flutter build output into the Nginx container
-#COPY build/web /usr/share/nginx/html
+# Copy the Flutter build output to the Nginx web directory
+COPY --from=build /app/build/web /usr/share/nginx/html
 
-# Step 3: Expose the default HTTP port
+
+# Expose port 80
 EXPOSE 4000
 
-# Step 4: Start Nginx in the foreground (default entrypoint is fine)
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
