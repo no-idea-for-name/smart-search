@@ -18,6 +18,9 @@ app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = {'pdf'}
 
+import time
+time.sleep(15)
+
 def allowed_file(filename):
     """Check if the file extension is allowed."""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

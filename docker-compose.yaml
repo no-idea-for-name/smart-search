@@ -71,7 +71,7 @@ services:
     pull_policy: always
     tty: true
     restart: unless-stopped
-    image: ollama/ollama:latest
+    image: ollama/ollama:0.4.6
     expose:
       - 11434
     environment:

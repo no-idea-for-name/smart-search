@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-import time
 from langchain_elasticsearch import ElasticsearchStore
 from langchain_ollama import OllamaEmbeddings
 import os
@@ -12,7 +11,8 @@ embedding_model = os.environ["EMBEDDING_MODEL"]
 
 
 #TODO: find a way to wait for the elasticsearch container to be ready
-time.sleep(30)
+import time
+time.sleep(10)
 
 # Initialize the Elasticsearch vector store for embedding and retrieval
 elasticsearch_client = ElasticsearchStore(
