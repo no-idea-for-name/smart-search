@@ -199,6 +199,24 @@ def delete_file():
 
     return jsonify({"message": f"File {file_name} and associated UUIDs deleted successfully"}), 200
 
+@app.route('/v1/documents', methods=['GET'])
+def list_documents():
+    # Specify the data file path
+    data_file_path = "data/data.json"
+
+    # Check if data.json exists
+    if not os.path.exists(data_file_path):
+        return jsonify({"error": "No data.json file found"}), 404
+
+    # Load existing data
+    with open(data_file_path, "r") as json_file:
+        try:
+            data = json.load(json_file)
+        except json.JSONDecodeError:
+            return jsonify({"error": "data.json is corrupted"}), 500
+        
+    # Return all of the things in the json file
+    return jsonify({"documents": data}), 200
 
 
 if __name__ == '__main__':
