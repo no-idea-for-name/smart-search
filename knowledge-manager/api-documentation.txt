@@ -1,0 +1,79 @@
+1. Upload File
+
+Endpoint URL:
+POST /v1/add
+
+Description:
+This endpoint allows users to upload a PDF file. The file is processed and added to a vector store, and the corresponding metadata is saved to a JSON file. Only PDF files are supported.
+
+Request Parameters:
+The file must be uploaded as part of a form-data request.
+
+
+{
+    "message": "File example.pdf uploaded successfully",
+    "uuids": ["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"]
+}
+
+
+2. Delete File
+
+Endpoint URL:
+DELETE /v1/delete
+
+Description:
+This endpoint deletes a previously uploaded file and removes its associated UUIDs from the vector store and metadata storage.
+
+Request Parameters:
+
+
+Example Request:
+DELETE /v1/delete?file=example.pdf
+
+Responses:
+
+Successful Deletion (200):
+If the file and associated UUIDs are successfully deleted.
+
+json
+Code kopieren
+{
+    "message": "File example.pdf and associated UUIDs deleted successfully"
+}
+File Not Found (404):
+If the file name does not exist in the metadata.
+
+json
+Code kopieren
+{
+    "error": "No entry found for file: example.pdf"
+}
+
+3. List Documents
+
+Endpoint URL:
+GET /v1/documents
+
+Description:
+This endpoint retrieves a list of all uploaded files and their corresponding metadata stored in data.json.
+
+Request Parameters:
+None.
+
+Responses:
+
+
+json
+Code kopieren
+{
+    "documents": [
+        {
+            "file": "example.pdf",
+            "uuids": ["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"]
+        },
+        {
+            "file": "another_file.pdf",
+            "uuids": ["123e4567-e89b-12d3-a456-426614174002"]
+        }
+    ]
+}
