@@ -36,7 +36,7 @@ LANGCHAIN_API_KEY,LANGCHAIN_TRACING_V2,LANGCHAIN_PROJECT: configure as needed fo
 
 ## Later versions:
 ### Optional:
-- [] user accounts for knowledge management and search (orginizations for multiple users) with restrictions
+- [ ] user accounts for knowledge management and search (orginizations for multiple users) with restrictions
 - [ ] added tags for documents
 - [ ] version control for files
 - [ ] filtering for metadata, tags ect when searching
