@@ -16,10 +16,31 @@ LANGCHAIN_API_KEY,LANGCHAIN_TRACING_V2,LANGCHAIN_PROJECT: configure as needed fo
 
 
 
-## Roadmap:
+# Roadmap:
 
-Version 1.0.0:
-- [ ] finished frontend implementation for search       
-- [ ] management for documents/knowledge base to be searched (as separate service or inside of flask app)
+## Version 1.0.0:
+
+### Search:
+- [ ] finished frontend implementation for search    
+- [ ] frontend implementation for search
+
+### Knowledge Manager:
+- [ ] management for documents/knowledge base to be searched (as separate service)
 - [ ] frontend implementation for knowledge management
 
+
+### RAG-Chatbot:
+- [ ] simple chatbot implementation
+- [ ] frontend implementation for chatbot
+
+
+## Later versions:
+### Optional:
+- [] user accounts for knowledge management and search (orginizations for multiple users) with restrictions
+- [ ] added tags for documents
+- [ ] version control for files
+- [ ] filtering for metadata, tags ect when searching
+- [ ] chatbot with sources and memory (memory aware retriever)
+- [ ] better pipeline for document ingestion
+- [ ] encryption for documents at rest
+- [ ] deployment for kubernetes
