@@ -1,7 +1,7 @@
 name: smart-search
 services:
   search-server:
-    image: search-server:0.1.2
+    image: search-server:0.2.0
     restart: unless-stopped
     ports:
       - 5000:5000
@@ -15,6 +15,28 @@ services:
       - LANGCHAIN_API_KEY=
       - LANGCHAIN_TRACING_V2=false
       - LANGCHAIN_PROJECT=smart-search
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
+    depends_on:
+      - elasticsearch
+      - ollama
+
+  knowledge-manager:
+    image: knowledge-manager:0.2.0
+    restart: unless-stopped
+    ports:
+      - 6000:6000
+    networks:
+      - elastic_network
+    environment:
+      - ES_HOST=elasticsearch
+      - ELASTIC_PASSWORD=test123
+      - EMBEDDING_MODEL=nomic-embed-text
+      - OLLAMA_HOST=ollama
+    volumes:
+      - knowledge_manager_data:/app/data/
     deploy:
       resources:
         limits:
@@ -49,7 +71,7 @@ services:
     pull_policy: always
     tty: true
     restart: unless-stopped
-    image: ollama/ollama:latest
+    image: ollama/ollama:0.5.0
     expose:
       - 11434
     environment:
@@ -71,3 +93,4 @@ networks:
 volumes:
   ollama_data:
   elasticsearch_data:
+  knowledge_manager_data:
