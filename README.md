@@ -28,7 +28,6 @@ LANGCHAIN_API_KEY,LANGCHAIN_TRACING_V2,LANGCHAIN_PROJECT: configure as needed fo
 - [ ] management for documents/knowledge base to be searched (as separate service)
 - [ ] frontend implementation for knowledge management
 
-
 ### RAG-Chatbot:
 - [ ] simple chatbot implementation
 - [ ] frontend implementation for chatbot
