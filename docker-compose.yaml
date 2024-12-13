@@ -45,6 +45,27 @@ services:
       - elasticsearch
       - ollama
 
+  rag-chatbot:
+    image: rag-chatbot:0.3.0
+    restart: unless-stopped
+    ports:
+      - 7000:7000
+    networks:
+      - elastic_network
+    environment:
+      - ES_HOST=elasticsearch
+      - ELASTIC_PASSWORD=test123
+      - EMBEDDING_MODEL=nomic-embed-text
+      - OLLAMA_HOST=ollama
+      - OPENAI_API_KEY=
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
+    depends_on:
+      - elasticsearch
+      - ollama
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
     restart: always
