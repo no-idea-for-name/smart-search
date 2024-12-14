@@ -58,21 +58,7 @@ const Home: FC = () => {
                 <meta name="description" content="The better way to study"/>
             </Head>
 
-            {/* Navigation Bar */}
-            <nav className="bg-gray-800 text-white py-4 px-6 flex justify-between items-center">
-                <div className="text-3xl font-bold">Smart Search</div>
-                <div>
-                    <a href="#" className="mx-4 hover:text-blue-500">
-                        Home
-                    </a>
-                    <a href="#" className="mx-4 hover:text-blue-500">
-                        Knowledge Manager
-                    </a>
-                    <a href="#" className="mx-4 hover:text-blue-500">
-                        Documentation
-                    </a>
-                </div>
-            </nav>
+
 
             {/* Main Chat View */}
             <main className="flex-grow flex flex-col items-center bg-gray-100 p-6">
