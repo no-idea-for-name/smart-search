@@ -1,7 +1,11 @@
-// pages/page.tsx
 'use client'
 import Head from 'next/head';
 import {FC, useEffect, useRef, useState} from 'react';
+import ReactMarkdown from 'react-markdown'; // Markdown rendering library
+import remarkGfm from 'remark-gfm'; // GitHub Flavored Markdown support
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import {solarizedlight} from "react-syntax-highlighter/dist/cjs/styles/prism"; // Syntax highlighting
+// Code block theme
 
 type Message = {
     text: string;
@@ -10,46 +14,41 @@ type Message = {
 
 const Home: FC = () => {
     const [messages, setMessages] = useState<Message[]>([
-        {text: 'Hello! How can I assist you today?', sender: 'ai'},
+        {text: 'Hello! How can I assist you today? You can send Markdown or code!', sender: 'ai'},
     ]);
     const [input, setInput] = useState<string>('');
-    const messageEndRef = useRef<HTMLDivElement>(null); // Ref for the end of the messages list
+    const messageEndRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        messageEndRef.current?.scrollIntoView({behavior: 'smooth'});
+    };
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
         if (input.trim() === '') return;
 
-        // Add human message to state
+        // Add the user's message
         const humanMessage: Message = {text: input, sender: 'human'};
         setMessages((prevMessages) => [...prevMessages, humanMessage]);
         setInput('');
 
-        // Simulate AI response
+        // Simulate AI response with Markdown content
         setTimeout(() => {
             const aiMessage: Message = {
-                text: 'Thanks for your query! Let me look that up for you.',
+                text: `Here is a Markdown example:\n\n**Bold Text**\n\n*Italic Text*\n\n\`\`\`javascript\nconst greet = () => console.log('Hello, Markdown!');\n\`\`\`\n\n- List item 1\n- List item 2`,
                 sender: 'ai',
             };
             setMessages((prevMessages) => [...prevMessages, aiMessage]);
         }, 1000);
-
-
     };
 
-    // Function to scroll to the bottom of the messages
-    const scrollToBottom = () => {
-        messageEndRef.current?.scrollIntoView({behavior: 'smooth'});
-    };
-
-    // Trigger scroll whenever messages change
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
 
-    const handleFlip = (index: number) =>{
-
-        console.log(index)
-    }
+    const handleFlip = (index: number) => {
+        console.log(index);
+    };
 
     return (
         <div className="flex flex-col h-screen">
@@ -58,14 +57,13 @@ const Home: FC = () => {
                 <meta name="description" content="The better way to study"/>
             </Head>
 
-
-
             {/* Main Chat View */}
             <main className="flex-grow flex flex-col items-center bg-gray-100 p-6">
                 <div className="w-3/4 bg-white rounded-lg shadow-md p-6 gap-4">
                     {/* Render Messages Dynamically */}
                     {messages.map((message, index) => (
                         <div key={index} className="flex flex-col">
+                            {/*for the AI response*/}
                             <div
                                 className={`rounded-lg p-4 w-2/5 ${
                                     message.sender === 'ai'
@@ -73,17 +71,49 @@ const Home: FC = () => {
                                         : 'bg-blue-500 text-white self-end mt-2'
                                 }`}
                             >
-                                {(message.sender === 'ai' && index != 0) && (
+                                {/* Flip Button for AI Messages */}
+                                {(message.sender === 'ai' && index !== 0) && (
                                     <div>
                                         <button
                                             className="rounded-2xl bg-blue-200 hover:bg-blue-300 p-2 pr-4 pl-4 mb-2"
                                             onClick={() => handleFlip(index)}
-                                        >Flip &#x2194;</button>
+                                        >
+                                            Flip &#x2194;
+                                        </button>
                                     </div>
                                 )}
-                                {message.text}
+                                {/* AI Message Rendered as Markdown */}
+                                {message.sender === 'ai' ? (
+                                    <ReactMarkdown
+                                        remarkPlugins={[remarkGfm]}
+                                        components={{
+                                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                                            code({node, inline, className, children, ...props}) {
+                                                const match = /language-(\w+)/.exec(className || '');
+                                                return !inline && match ? (
+                                                    <SyntaxHighlighter
+                                                        style={solarizedlight}
+                                                        language={match[1]}
+                                                        PreTag="div"
+                                                        {...props}
+                                                    >
+                                                        {String(children).replace(/\n$/, '') /* Trim extra newlines */}
+                                                    </SyntaxHighlighter>
+                                                ) : (
+                                                    <code className={className} {...props}>
+                                                        {children}
+                                                    </code>
+                                                );
+                                            },
+                                        }}
+                                    >
+                                        {message.text}
+                                    </ReactMarkdown>
+                                ) : (
+                                    <p>{message.text}</p>
+                                )}
                             </div>
-                            {message.sender === 'ai'&&(
+                            {message.sender === 'ai' && (
                                 <div className="border-t border-gray-200 w-full self-start mt-4"></div>
                             )}
                         </div>
