@@ -9,14 +9,13 @@ from langsmith import Client,traceable
 import os
 
 
-embedding_model = os.environ["LANGCHAIN_TRACING_V2"]
+tracing_active = os.environ["LANGCHAIN_TRACING_V2"]
 api_key = os.environ["LANGCHAIN_API_KEY"]
-embedding_model = os.environ["LANGCHAIN_PROJECT"]
+langchain_project_name = os.environ["LANGCHAIN_PROJECT"]
 
 client = Client(api_key=api_key)
 
 
-import os
 import time
 
 time.sleep(10)
@@ -87,7 +86,6 @@ def chat_openai():
 
         question = data['query']
         response = model_predict(question)
-
 
 
         # Return the documents as a JSON response
