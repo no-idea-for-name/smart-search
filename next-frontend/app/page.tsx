@@ -46,6 +46,11 @@ const Home: FC = () => {
         scrollToBottom();
     }, [messages]);
 
+    const handleFlip = (index: number) =>{
+
+        console.log(index)
+    }
+
     return (
         <div className="flex flex-col h-screen">
             <Head>
@@ -82,14 +87,20 @@ const Home: FC = () => {
                                         : 'bg-blue-500 text-white self-end mt-2'
                                 }`}
                             >
+                                {(message.sender === 'ai' && index != 0) && (
+                                    <div>
+                                        <button
+                                            className="rounded-2xl bg-blue-200 hover:bg-blue-300 p-2 pr-4 pl-4 mb-2"
+                                            onClick={() => handleFlip(index)}
+                                        >Flip &#x2194;</button>
+                                    </div>
+                                )}
                                 {message.text}
                             </div>
                             {message.sender === 'ai'&&(
                                 <div className="border-t border-gray-200 w-full self-start mt-4"></div>
                             )}
                         </div>
-
-
                     ))}
                     <div ref={messageEndRef}/>
                 </div>
