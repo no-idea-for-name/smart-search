@@ -4,7 +4,6 @@ from langchain_elasticsearch import ElasticsearchStore
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from PyPDF2 import PdfReader
 from langchain_core.documents import Document
-from langchain_elasticsearch import ElasticsearchStore
 from langchain_ollama import OllamaEmbeddings
 import json
 import requests

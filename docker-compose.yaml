@@ -1,7 +1,7 @@
 name: smart-search
 services:
   search-server:
-    image: search-server:0.2.0
+    image: search-server:0.3.0
     restart: unless-stopped
     ports:
       - 5000:5000
@@ -24,7 +24,7 @@ services:
       - ollama
 
   knowledge-manager:
-    image: knowledge-manager:0.2.0
+    image: knowledge-manager:0.3.0
     restart: unless-stopped
     ports:
       - 6000:6000
@@ -57,6 +57,9 @@ services:
       - ELASTIC_PASSWORD=test123
       - EMBEDDING_MODEL=nomic-embed-text
       - OLLAMA_HOST=ollama
+      - LANGCHAIN_API_KEY=
+      - LANGCHAIN_TRACING_V2=true
+      - LANGCHAIN_PROJECT=smart-search
       - OPENAI_API_KEY=
     deploy:
       resources:
